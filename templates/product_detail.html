@@ -1,0 +1,125 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ product.name }} | OnStore</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f8f9fa;
+            margin: 0;
+            color: #222;
+        }
+
+        nav {
+            background: white;
+            padding: 20px 7%;
+            box-shadow: 0 2px 10px #ddd;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #2563eb;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .container {
+            width: 85%;
+            margin: 50px auto;
+            display: flex;
+            gap: 40px;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+        }
+
+        .container img {
+            width: 45%;
+            max-height: 400px;
+            object-fit: contain;
+        }
+
+        .details {
+            flex: 1;
+        }
+
+        .price {
+            font-size: 28px;
+            color: #2563eb;
+            font-weight: bold;
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 14px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        @media(max-width: 650px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .container img {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <a href="/">OnStore.</a>
+    </nav>
+
+    <div class="container">
+
+        {% if product.image %}
+            <img src="{{ product.image.url }}"
+                 alt="{{ product.name }}">
+        {% endif %}
+
+        <div class="details">
+
+            <p>{{ product.category.name }}</p>
+
+            <h1>{{ product.name }}</h1>
+
+            <p>{{ product.description }}</p>
+
+            <p class="price">
+                ₹{{ product.price }}
+            </p>
+
+            <p>Available stock: {{ product.stock }}</p>
+
+            {% if product.stock > 0 %}
+                <form method="POST"
+                action="{% url 'add_to_cart' product.id %}">
+
+                         {% csrf_token %}
+
+                        <button type="submit">
+                        Add to Cart
+                        </button>
+
+                </form>
+                
+            {% else %}
+                <button disabled>Out of Stock</button>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</body>
+</html>
