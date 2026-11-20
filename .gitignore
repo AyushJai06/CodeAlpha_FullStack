@@ -13,7 +13,7 @@ env/
 !.env.example
 
 # Local database
- db.sqlite3
+db.sqlite3
 
 # Editor and OS files
 .vscode/
